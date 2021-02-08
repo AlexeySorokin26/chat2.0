@@ -20,6 +20,7 @@ public:
 	bool Loginned(const int id);				// check if a user is _loggined
 	void LogginUser(const std::string login); // to set _loggined of user to true;
 	void Logout(const int id);
+	int GetIdByLogin(const std::string login);
 private:
 	std::vector<User> _users;				// id-User ?maybe better to use a list or deque; 
 	unsigned int _amountOfUsers;

@@ -57,6 +57,8 @@ int main()
 			if (server.LoginUser(user.GetPassword(), user.GetLogin())) {
 				server.LogginUser(user.GetLogin());
 				std::cout << "successful login!" << std::endl;
+				std::cout << "all your messages:" << std::endl;
+				server.ShowUserMessages(server.GetIdByLogin(user.GetLogin()));
 			}
 			else {
 				std::cout << "your data is not correct - > cannot login you" << std::endl;

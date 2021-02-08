@@ -113,3 +113,10 @@ void Server::Logout(const int id) {
 	if (ValidId(id))
 		_users[id].SetLoggined() = false;
 }
+
+int Server::GetIdByLogin(const std::string login) {
+	for (auto& u : _users)
+		if (u.GetLogin() == login)
+			return u.Id();
+	return -1;
+}
