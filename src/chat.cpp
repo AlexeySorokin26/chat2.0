@@ -6,11 +6,10 @@
 
 int main()
 {
-
 	Server server;
-
 	std::string command = ""; 
 	server.Help(); // show how to use our server
+
 	while (true) {
 		std::cout << "------------------------------------" << std::endl;
 		std::cout << "Imput your command:" << std::endl;
@@ -56,6 +55,7 @@ int main()
 			getline(std::cin, user.SetPassword());
 
 			if (server.LoginUser(user.GetPassword(), user.GetLogin())) {
+				server.LogginUser(user.GetLogin());
 				std::cout << "successful login!" << std::endl;
 			}
 			else {
@@ -72,7 +72,10 @@ int main()
 			std::cout << "input your message: ";
 			std::string message;
 			getline(std::cin, message);
-			server.SendMessage(stoi(fromId), stoi(toId), message);
+			if (server.Loginned(stoi(fromId)))
+				server.SendMessage(stoi(fromId), stoi(toId), message);
+			else
+				std::cout << "your should login first!" << std::endl;
 		}
 		else if (command == "show all") {
 			server.ShowAllUsers();
@@ -81,6 +84,21 @@ int main()
 			std::cout << "inpud an id of user to show:" << std::endl;
 			std::string id; getline(std::cin, id);
 			server.ShowUserMessages(stoi(id));
+		}
+		else if (command == "messageAll") {
+			std::cout << "input your id: ";
+			std::string fromId;
+			getline(std::cin, fromId);
+			std::cout << "input your message: ";
+			std::string message;
+			getline(std::cin, message);
+			server.SendMessageToAll(stoi(fromId), message);
+		}
+		else if (command == "logout") {
+			std::cout << "input your id: ";
+			std::string id;
+			getline(std::cin, id);
+			server.Logout(stoi(id));
 		}
    }
    

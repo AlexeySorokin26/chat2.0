@@ -11,8 +11,10 @@ void Server::Help() const {
 		<< " - > to login into our server - type: \"login\"\n"
 		<< " - > to show information about some user - type: \"show info\"\n"
 		<< " - > to send message - type: message \n"
+		<< " - > to send message to all users - type: messageAll \n"
 		<< " - > to show all users - type: show all \n"
 		<< " - > to show messages of user - type: umessage \n"
+		<< " - > to loginout from our server - type: logout \n"
 		<< std::endl;
 }
 
@@ -64,9 +66,19 @@ unsigned int Server::GetAmountOfUser() {
 }
 
 void Server::SendMessage(const int fromId, const int ToId, const std::string message) {
-	if (ValidId(fromId), ValidId(ToId))
+	if (ValidId(fromId) && ValidId(ToId))
 		_users[ToId].AddMessageWithId(std::make_pair(fromId, message));
 	else
+		std::cout << "we could not send a message!" << std::endl;
+}
+
+void Server::SendMessageToAll(const int fromId, const std::string message) {
+	if (ValidId(fromId)) {
+		for (auto& u : _users) 
+			if (u.Id() != fromId) // send message to all except yourself
+				u.AddMessageWithId(std::make_pair(fromId, message));
+	}
+	else 
 		std::cout << "we could not send a message!" << std::endl;
 }
 
@@ -81,4 +93,23 @@ bool Server::ValidId(const int id) {
 	if (id >= 0 && id <= _amountOfUsers && _amountOfUsers != 0)
 		return true;
 	return false;
+}
+
+bool Server::Loginned(const int id) {
+	if (ValidId(id))  // if we have such id and user loggined
+		return _users[id].GetLoggined();
+	return false;
+}
+
+void Server::LogginUser(const std::string login) {
+	// first we should find a user id with such login
+	// next should set his _loggined to true
+	for (auto& u : _users)
+		if (u.GetLogin() == login)
+			u.SetLoggined() = true;
+}
+
+void Server::Logout(const int id) {
+	if (ValidId(id))
+		_users[id].SetLoggined() = false;
 }

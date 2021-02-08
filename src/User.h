@@ -13,9 +13,10 @@ private:
 	std::string _name;
 	std::string _surname;
 	std::string _age;
+	bool _loggined;  // if a user is loggined 
 	static int id;
 public:
-	User(std::string login="nologin", std::string password="nopassword", std::string name="noname", std::string surname="noname", std::string age="0");
+	User(std::string login="nologin", std::string password="nopassword", std::string name="noname", std::string surname="noname", std::string age="0", bool loggined=false);
 	~User() = default;
 	const int Id() const;
 	static int TotalNumberOfUsers();
@@ -35,6 +36,9 @@ public:
 
 	std::string& SetLogin(const std::string login="nologin");
 	const std::string& GetLogin() const;
+
+	bool& SetLoggined(const bool loggined=false); //
+	const bool& GetLoggined() const;
 
 	void AddMessageWithId(const std::pair<int, Message> messageWithId);
 	void ShowInfo();

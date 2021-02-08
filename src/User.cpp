@@ -2,8 +2,8 @@
 
 int User::id = -1; // id of users will start from 1; 
 
-User::User(std::string login, std::string password, std::string name, std::string surname, std::string age)
-	: _login(login), _password(password), _name(name), _surname(surname), _age(age) {
+User::User(std::string login, std::string password, std::string name, std::string surname, std::string age, bool loggined)
+	: _login(login), _password(password), _name(name), _surname(surname), _age(age), _loggined(loggined) {
 	id++;
 }
 
@@ -68,6 +68,15 @@ std::string& User::SetLogin(const std::string login) {
 
 const std::string& User::GetLogin() const {
 	return _login;
+}
+
+bool& User::SetLoggined(const bool loggined) {
+	_loggined = loggined;
+	return _loggined;
+}
+
+const bool& User::GetLoggined() const {
+	return _loggined;
 }
 
 void User::AddMessageWithId(std::pair<int, Message> messageWithId) {

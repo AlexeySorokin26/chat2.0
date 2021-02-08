@@ -14,8 +14,12 @@ public:
 	void RemoveUserByID(const int id);		
 	unsigned int GetAmountOfUser();
 	void SendMessage(const int fromId, const int ToId, const std::string message);
+	void SendMessageToAll(const int fromId, const std::string message);
 	void ShowUserMessages(const int id);
 	bool ValidId(const int id);
+	bool Loginned(const int id);				// check if a user is _loggined
+	void LogginUser(const std::string login); // to set _loggined of user to true;
+	void Logout(const int id);
 private:
 	std::vector<User> _users;				// id-User ?maybe better to use a list or deque; 
 	unsigned int _amountOfUsers;
