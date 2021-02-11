@@ -1,5 +1,6 @@
 #pragma once
 #include "Message.h"
+#include "Utility.h"
 #include <string>
 #include <vector>
 #include <utility>
@@ -29,6 +30,8 @@ public:
 
 	const std::string GetAge() const;
 	std::string& SetAge(const std::string otherAge="0");
+	const unsigned int AgeToUInt(); // will return age as int; as well check if it possible; 
+	const unsigned int TypeYourAgeAgain(); // and ask to set a normal number;
 
 	//std::string& SetPassword(const char* password);
 	std::string& SetPassword(const std::string password="");

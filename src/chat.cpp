@@ -46,19 +46,22 @@ int main()
 			server.ShowUser(stoi(id));
 		}
 		else if (command == "login") {
-			User user;
+			//User user;
 			
+			std::string login;
 			std::cout << "input your login:";
-			getline(std::cin, user.SetLogin());
+			getline(std::cin, login);
 
+			std::string password;
 			std::cout << "input you password:";
-			getline(std::cin, user.SetPassword());
+			getline(std::cin, password);
 
-			if (server.LoginUser(user.GetPassword(), user.GetLogin())) {
-				server.LogginUser(user.GetLogin());
+			if (server.PassUser(password, login)) {
+				server.LoginUser(login);
 				std::cout << "successful login!" << std::endl;
 				std::cout << "all your messages:" << std::endl;
-				server.ShowUserMessages(server.GetIdByLogin(user.GetLogin()));
+				server.ShowUserMessages(server.GetIdByLogin(login));
+				//std::cout << "< " << login << " >" << ": ";
 			}
 			else {
 				std::cout << "your data is not correct - > cannot login you" << std::endl;
@@ -83,7 +86,7 @@ int main()
 			server.ShowAllUsers();
 		}
 		else if (command == "umessage") {
-			std::cout << "inpud an id of user to show:" << std::endl;
+			std::cout << "input an id of user to show:" << std::endl;
 			std::string id; getline(std::cin, id);
 			server.ShowUserMessages(stoi(id));
 		}

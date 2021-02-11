@@ -42,7 +42,32 @@ std::string& User::SetAge(std::string otherAge) {
 	return _age;
 }
 
-/*
+const unsigned int User::AgeToUInt() {
+	if (IsStringNumber(_age)) { // if it possible to convert age to int; user could type his/her age as a 2i8 or something 
+		return stoi(_age);
+	}
+	else {
+		TypeYourAgeAgain();
+	}
+}
+
+const unsigned int User::TypeYourAgeAgain() {
+	std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
+	std::string answer; getline(std::cin, answer);
+	while(answer == "yes") {
+		std::string age;
+		getline(std::cin, age);
+		if (IsStringNumber(age)) {
+			_age = age;
+			return stoi(_age);
+		}
+		else {
+			std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
+		}
+	}
+}
+
+/* TODO should be a nicer way: then we type a password it should be converted into *
 std::string& User::SetPassword(const char* password) {
 
 	 int i = 0;

@@ -36,7 +36,7 @@ void Server::AddUser(const User& newUser) {
 	_users.push_back(newUser);
 }
 
-bool Server::LoginUser(const std::string password, const std::string login) {
+bool Server::PassUser(const std::string password, const std::string login) {
 	// first we should check if we have such user with a given login
 	// second we should check his/her inputted password
 	bool checkerLogin = false;
@@ -87,6 +87,9 @@ void Server::ShowUserMessages(const int id) {
 		std::cout << "messages of user with id: " << id << std::endl;
 		_users[id].ShowMessages();
 	}	
+	else {
+		std::cout << "your id is not valid!" << std::endl;
+	}
 }
 
 bool Server::ValidId(const int id) {
@@ -101,7 +104,7 @@ bool Server::Loginned(const int id) {
 	return false;
 }
 
-void Server::LogginUser(const std::string login) {
+void Server::LoginUser(const std::string login) {
 	// first we should find a user id with such login
 	// next should set his _loggined to true
 	for (auto& u : _users)
@@ -110,8 +113,11 @@ void Server::LogginUser(const std::string login) {
 }
 
 void Server::Logout(const int id) {
-	if (ValidId(id))
+	if (ValidId(id) && _users[id].GetLoggined())
 		_users[id].SetLoggined() = false;
+	else {
+		std::cout << "your id is not valid!" << std::endl;
+	}
 }
 
 int Server::GetIdByLogin(const std::string login) {
