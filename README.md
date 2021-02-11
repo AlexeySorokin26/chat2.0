@@ -4,9 +4,9 @@ chat2.0 is a simple console chat to send messages to each other.
 ## Installation
 Use [CMake](https://cmake.org/) to build your project. On Linux
 ```bash
-  cmake -DCMAKE_BUILD_TYPE=Release "path\to"
-  make -j4
-  ./Chat
+cmake -DCMAKE_BUILD_TYPE=Release "path\to"
+make -j4
+./Chat
 ```
 
 ## Usage 
