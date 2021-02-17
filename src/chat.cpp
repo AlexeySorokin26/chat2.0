@@ -2,6 +2,7 @@
 #include "User.h"
 #include "Message.h"
 #include "Server.h"
+#include <conio.h>
 
 
 int main()
@@ -34,10 +35,34 @@ int main()
 			std::cout << "input your age: ";
 			getline(std::cin, user.SetAge());
 
+			/* 
 			std::cout << "input your password: ";
 			getline(std::cin, user.SetPassword());
-
+			*/
+			char ch;
+			std::string pass = "";
+			std::cout << "input your pass: ";
+			while (true) {
+				ch = _getch(); // get elements without printing them
+				if (ch == 13) // enter
+					break;
+				else if (ch == 8) { // backspace or delete previous element
+					// need to move a cursor back 
+					std::cout << (char)8 << ' ' << (char)8;
+					// it is a console trick; if we put 8 of char than it's like a backspace
+					// and delete one element (we use just ' ') from our pass and from a console 
+					// and move back one more time
+					if (!pass.empty())
+						pass.erase(pass.size() - 1); // keep a string size of pass.size() - 1; other delete
+				}
+				else {
+					std::cout << "*";
+					pass = pass + ch;
+				}
+			}
+			user.SetPassword(pass);
 			server.AddUser(user);
+			std::cout << std::endl;
 		}
 		else if (command == "show info") {
 			std::cout << "which id should we show? input your id:";
