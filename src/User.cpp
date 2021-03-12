@@ -1,10 +1,11 @@
 #include "User.h"
 
-int User::id = -1; // id of users will start from 1; 
+int User::counter_of_users = -1; // id of users will start from 0; 
 
 User::User(std::string login, std::string password, std::string name, std::string surname, std::string age, bool loggined)
 	: _login(login), _password(password), _name(name), _surname(surname), _age(age), _loggined(loggined) {
-	id++;
+	counter_of_users++;
+	id = counter_of_users;
 }
 
 const int User::Id() const {
@@ -12,7 +13,7 @@ const int User::Id() const {
 }
 
 int User::TotalNumberOfUsers() {
-	return id;
+	return counter_of_users;
 }
 
 const std::string& User::GetName() const {
@@ -118,8 +119,12 @@ void User::ShowInfo() {
 }
 
 void User::ShowMessages() {
-	for (auto& sm : _receivedMessages) 
-		std::cout << "message from user with id: " << sm.first << " a message: " << sm.second << std::endl;
+	if (_receivedMessages.size() != 0) {
+		for (auto& sm : _receivedMessages)
+			std::cout << "message from user with id: " << sm.first << " a message: " << sm.second << std::endl;
+	}
+	else
+		std::cout << "no message yet\n";
 }
 
 

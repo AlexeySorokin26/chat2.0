@@ -15,7 +15,8 @@ private:
 	std::string _surname;
 	std::string _age;
 	bool _loggined;  // if a user is loggined 
-	static int id;
+	int id;
+	static int counter_of_users;
 public:
 	User(std::string login="nologin", std::string password="nopassword", std::string name="noname", std::string surname="noname", std::string age="0", bool loggined=false);
 	~User() = default;

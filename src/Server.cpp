@@ -21,9 +21,8 @@ void Server::Help() const {
 void Server::ShowUser(const int id) {
 	if (ValidId(id))
 		_users[id].ShowInfo();
-	else {
+	else 
 		std::cout << "we don't have such user with id: " << id << std::endl;
-	}
 }
 
 void Server::ShowAllUsers() {
@@ -56,9 +55,8 @@ void Server::RemoveUserByID(const int id) {
 	
 	if(ValidId(id))
 		_users.erase(_users.begin() + id);
-	else {
+	else 
 		std::cout << "we don't have such user with your id: "  << id << std::endl;
-	}
 }
 
 unsigned int Server::GetAmountOfUser() {
@@ -87,13 +85,12 @@ void Server::ShowUserMessages(const int id) {
 		std::cout << "messages of user with id: " << id << std::endl;
 		_users[id].ShowMessages();
 	}	
-	else {
+	else 
 		std::cout << "your id is not valid!" << std::endl;
-	}
 }
 
 bool Server::ValidId(const int id) {
-	if (id >= 0 && id <= _amountOfUsers && _amountOfUsers != 0)
+	if (id >= 0 && id < _amountOfUsers && _amountOfUsers != 0)
 		return true;
 	return false;
 }
@@ -115,9 +112,8 @@ void Server::LoginUser(const std::string login) {
 void Server::Logout(const int id) {
 	if (ValidId(id) && _users[id].GetLoggined())
 		_users[id].SetLoggined() = false;
-	else {
+	else 
 		std::cout << "your id is not valid!" << std::endl;
-	}
 }
 
 int Server::GetIdByLogin(const std::string login) {

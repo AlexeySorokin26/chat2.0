@@ -86,7 +86,6 @@ int main()
 				std::cout << "successful login!" << std::endl;
 				std::cout << "all your messages:" << std::endl;
 				server.ShowUserMessages(server.GetIdByLogin(login));
-				//std::cout << "< " << login << " >" << ": ";
 			}
 			else {
 				std::cout << "your data is not correct - > cannot login you" << std::endl;
