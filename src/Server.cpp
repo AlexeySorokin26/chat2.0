@@ -35,6 +35,47 @@ void Server::AddUser(const User& newUser) {
 	_users.push_back(newUser);
 }
 
+void Server::AddUsersFromFile(std::string serverDataFile) {
+	// first load a file with history: line by line
+	// Alexey - login;
+	// Messages - his messages
+	// format: Alexey |Message1 |Message2 
+	// should contain registred users and their messages
+	// our user class contains of std::vector<std::pair<int, Message>> _receivedMessages;
+	// our server contains of std::vector<User> _users;
+	ifstream server_file(serverDataFile);
+
+	//std::vector<User> usersInFile;
+
+	if (server_file.is_open()) {
+		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+		boost::char_separator<char> sep("|,;");
+
+		string line;
+		User tmpUser;
+		while (getline(server_file, line)) {
+			tokenizer tokens(line, sep);
+			int counter = 0;
+			for (auto it = tokens.begin(); it != tokens.end(); ++it) {
+				if (counter == 0) {
+					tmpUser.SetLogin(*it);
+					counter++;
+				}
+				else {
+					tmpUser.AddMessageWithId(std::make_pair(0, *it));
+					counter++;
+				}
+
+			}
+			_users.push_back(tmpUser);
+			tmpUser.DeleteMessages();
+		}
+		//cout << usersInFile.size() << endl;
+	}
+
+
+}
+
 bool Server::PassUser(const std::string password, const std::string login) {
 	// first we should check if we have such user with a given login
 	// second we should check his/her inputted password

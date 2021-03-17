@@ -68,20 +68,11 @@ const unsigned int User::TypeYourAgeAgain() {
 	}
 }
 
-/* TODO should be a nicer way: then we type a password it should be converted into *
-std::string& User::SetPassword(const char* password) {
 
-	 int i = 0;
-	while (password[i]!= '\0')
-		_password[i++] = *(password + i);
-	
-}
-*/
 std::string& User::SetPassword(const std::string password) {
 	_password = password;
 	return _password;
 }
-
 
 const std::string User::GetPassword() const {
 	return _password;
@@ -107,6 +98,10 @@ const bool& User::GetLoggined() const {
 
 void User::AddMessageWithId(std::pair<int, Message> messageWithId) {
 	_receivedMessages.push_back(messageWithId);
+}
+
+void User::DeleteMessages() {
+	_receivedMessages.clear();
 }
 
 void User::ShowInfo() {

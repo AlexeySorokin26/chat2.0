@@ -45,6 +45,7 @@ public:
 	const bool& GetLoggined() const;
 
 	void AddMessageWithId(const std::pair<int, Message> messageWithId);
+	void DeleteMessages();
 	void ShowInfo();
 	void ShowMessages();
 }; 

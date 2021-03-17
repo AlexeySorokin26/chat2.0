@@ -12,34 +12,43 @@ namespace fs = std::filesystem;
 
 int main()
 {
-	// first load a file with history: line by line
-	// Alexey - login;
-	// Messages - his messages
-	// format: Alexey |Message1 |Message2 
-	// should contain registred users and their messages
-	// our user class contains of std::vector<std::pair<int, Message>> _receivedMessages;
-	// our server contains of std::vector<User> _users;	
-	ifstream server_file("server_file.txt");
-	/*if (!server_file) {
-		server_file = fstream("sever_info.txt", ios::in | ios::out | ios::trunc);
-		cout << "empty" << endl;
-	}*/
+		
+	std::string serverDataFile = "server_file.txt";
+	/*
+	ifstream server_file(serverDataFile);
+	
+	std::vector<User> usersInFile;
+
 	if (server_file.is_open()) {
 		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 		boost::char_separator<char> sep("|,;");
 
 		string line;
-		vector<string> res;
+		User tmpUser;
 		while (getline(server_file, line)) {
 			tokenizer tokens(line, sep);
+			int counter = 0;
 			for (auto it = tokens.begin(); it != tokens.end(); ++it) {
-				res.push_back(*it);
+				if (counter == 0) {
+					tmpUser.SetLogin(*it);
+					counter++;
+				}
+				else {
+					tmpUser.AddMessageWithId(std::make_pair(0, *it));
+					counter++;
+				}
+				
 			}
+			usersInFile.push_back(tmpUser);
+			tmpUser.DeleteMessages();
 		}
-		cout << res.size() << endl;
+		cout << usersInFile.size() << endl;
 	}
+	 */
 
 	Server server;
+	server.AddUsersFromFile(serverDataFile);
+
 	std::string command = ""; 
 	server.Help(); // show how to use our server
 
@@ -67,10 +76,6 @@ int main()
 			std::cout << "input your age: ";
 			getline(std::cin, user.SetAge());
 
-			/* 
-			std::cout << "input your password: ";
-			getline(std::cin, user.SetPassword());
-			*/
 			char ch;
 			std::string pass = "";
 			std::cout << "input your pass: ";
