@@ -2,14 +2,22 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+#include <fstream>
+using namespace std;
 
 class Message {
 public:
-	Message(std::string message);
+	Message(string message);
 	~Message() = default;
 	const std::string& GetMessage() const;
-	friend std::ostream& operator<< (std::ostream& out, const Message& message);
+
+	friend ifstream& operator >>(std::ifstream& is, Message& obj);
+	friend ofstream& operator <<(std::ofstream& os, const Message& obj);
+	
+	friend istream& operator >>(istream& is, Message& obj);
+	friend ostream& operator <<(ostream& os, const Message& message);
+	
 private:
-	std::string _message;
+	string _message;
 };
 

@@ -7,7 +7,34 @@
 
 int main()
 {
+	// first load a file with history: line by line
+	// Alexey - login;
+	// Messages - his messages
+	// format: Alexey |Message1 |Message2 
+	// should contain registred users and their messages
+	// our user class contains of std::vector<std::pair<int, Message>> _receivedMessages;
+	// our server contains of std::vector<User> _users;	
+	fstream server_file = fstream("server_file.txt", ios::in | ios::out);
+	if (!server_file)
+		// if we dont have such file then with trunc it will be created
+		server_file = fstream("sever_info.txt", ios::in | ios::out | ios::trunc);
+
 	Server server;
+
+	if (server_file.is_open()) {
+		std::vector<User> registredUsers;
+		std::string line;
+		while (getline(server_file, line)) {
+			User tmpUser;
+			tmpUser.SetLogin(line);
+			registredUsers.push_back(tmpUser);
+		}
+	}
+	else {
+
+	}
+
+	
 	std::string command = ""; 
 	server.Help(); // show how to use our server
 
