@@ -21,7 +21,7 @@ public:
 	User(std::string login="nologin", std::string password="nopassword", std::string name="noname", std::string surname="noname", std::string age="0", bool loggined=false);
 	~User() = default;
 	const int Id() const;
-	static int TotalNumberOfUsers();
+	static int& TotalNumberOfUsers();
 
 	const std::string& GetName() const;
 	std::string& SetName(const std::string otherName="noname");

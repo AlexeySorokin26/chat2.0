@@ -1,18 +1,19 @@
 #include "User.h"
 
-int User::counter_of_users = -1; // id of users will start from 0; 
+int User::counter_of_users = 0; // id of users will start from 0; 
 
 User::User(std::string login, std::string password, std::string name, std::string surname, std::string age, bool loggined)
 	: _login(login), _password(password), _name(name), _surname(surname), _age(age), _loggined(loggined) {
-	counter_of_users++;
 	id = counter_of_users;
+	counter_of_users++;
+	
 }
 
 const int User::Id() const {
 	return id;
 }
 
-int User::TotalNumberOfUsers() {
+int& User::TotalNumberOfUsers() {
 	return counter_of_users;
 }
 
@@ -108,8 +109,8 @@ void User::ShowInfo() {
 	//std::string tmpName = toupper(_name[0]) + name[]
 	// we could work on nice typing of our names: sorOkiN - > Sorokin for example
 	// islower isupper tolower toupper
-	std::cout << "Name:" << _name << ", Surname: " << _surname << ", Age: " << _age <<
-		", Login:" << _login << std::endl;
+	std::cout << "Name: " << _name << ", Surname: " << _surname << ", Age: " << _age <<
+		", Login: " << _login << ", id: " << id << std::endl;
 	std::cout << "------------------------------------" << std::endl;
 }
 

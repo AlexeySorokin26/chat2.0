@@ -70,6 +70,10 @@ void Server::AddUsersFromFile(std::string serverDataFile) {
 			_users.push_back(tmpUser);
 			tmpUser.DeleteMessages();
 		}
+		//cout << tmpUser.TotalNumberOfUsers() << endl;
+		//tmpUser.TotalNumberOfUsers() = -1;
+		tmpUser.TotalNumberOfUsers() = _users.size();
+		//cout << tmpUser.TotalNumberOfUsers() << endl;
 		//cout << usersInFile.size() << endl;
 	}
 

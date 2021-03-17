@@ -63,7 +63,9 @@ int main()
 			server.Help();
 		}
 		else if (command == "new user"){
+			//std::cout << User::TotalNumberOfUsers() << std::endl;
 			User user;
+			//std::cout << User::TotalNumberOfUsers() << std::endl;
 			std::cout << "input your login: ";
 			getline(std::cin, user.SetLogin());
 
