@@ -3,7 +3,12 @@
 #include "Message.h"
 #include "Server.h"
 #include <conio.h>
+#include <boost/tokenizer.hpp>
+#include <filesystem>
 
+using namespace std;
+using namespace boost;
+namespace fs = std::filesystem;
 
 int main()
 {
@@ -14,27 +19,27 @@ int main()
 	// should contain registred users and their messages
 	// our user class contains of std::vector<std::pair<int, Message>> _receivedMessages;
 	// our server contains of std::vector<User> _users;	
-	fstream server_file = fstream("server_file.txt", ios::in | ios::out);
-	if (!server_file)
-		// if we dont have such file then with trunc it will be created
+	ifstream server_file("server_file.txt");
+	/*if (!server_file) {
 		server_file = fstream("sever_info.txt", ios::in | ios::out | ios::trunc);
+		cout << "empty" << endl;
+	}*/
+	if (server_file.is_open()) {
+		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+		boost::char_separator<char> sep("|,;");
+
+		string line;
+		vector<string> res;
+		while (getline(server_file, line)) {
+			tokenizer tokens(line, sep);
+			for (auto it = tokens.begin(); it != tokens.end(); ++it) {
+				res.push_back(*it);
+			}
+		}
+		cout << res.size() << endl;
+	}
 
 	Server server;
-
-	if (server_file.is_open()) {
-		std::vector<User> registredUsers;
-		std::string line;
-		while (getline(server_file, line)) {
-			User tmpUser;
-			tmpUser.SetLogin(line);
-			registredUsers.push_back(tmpUser);
-		}
-	}
-	else {
-
-	}
-
-	
 	std::string command = ""; 
 	server.Help(); // show how to use our server
 
