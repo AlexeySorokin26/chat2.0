@@ -1,4 +1,3 @@
-#pragma once
 #include "Utility.h"
 
 bool IsStringNumber(const std::string& s) {

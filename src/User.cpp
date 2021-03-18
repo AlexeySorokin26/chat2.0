@@ -9,7 +9,7 @@ User::User(std::string login, std::string password, std::string name, std::strin
 	
 }
 
-const int User::Id() const {
+int User::Id() const {
 	return id;
 }
 
@@ -44,7 +44,7 @@ std::string& User::SetAge(std::string otherAge) {
 	return _age;
 }
 
-const unsigned int User::AgeToUInt() {
+unsigned int User::AgeToUInt() {
 	if (IsStringNumber(_age)) { // if it possible to convert age to int; user could type his/her age as a 2i8 or something 
 		return stoi(_age);
 	}
@@ -53,7 +53,7 @@ const unsigned int User::AgeToUInt() {
 	}
 }
 
-const unsigned int User::TypeYourAgeAgain() {
+unsigned int User::TypeYourAgeAgain() {
 	std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
 	std::string answer; getline(std::cin, answer);
 	while(answer == "yes") {
