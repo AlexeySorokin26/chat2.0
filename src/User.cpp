@@ -6,7 +6,6 @@ User::User(std::string login, std::string password, std::string name, std::strin
 	: _login(login), _password(password), _name(name), _surname(surname), _age(age), _loggined(loggined) {
 	id = counter_of_users;
 	counter_of_users++;
-	
 }
 
 int User::Id() const {
@@ -116,11 +115,19 @@ void User::ShowInfo() {
 
 void User::ShowMessages() {
 	if (_receivedMessages.size() != 0) {
-		for (auto& sm : _receivedMessages)
-			std::cout << "message from user with id: " << sm.first << " a message: " << sm.second << std::endl;
+		for(int i = 0; i < _receivedMessages.size(); ++i)
+			std::cout << "message from user with id: " << _receivedMessages[i].first << " a message: " << _receivedMessages[i].second.GetMessage() << std::endl;
+		/* 
+		for (const auto& sm : _receivedMessages)
+			std::cout << "message from user with id: " << sm.first. << " a message: " << sm.second << std::endl;
+		*/
 	}
 	else
 		std::cout << "no message yet\n";
+}
+
+std::vector<std::pair<int, Message>> User::GetMessages() {
+	return _receivedMessages;
 }
 
 

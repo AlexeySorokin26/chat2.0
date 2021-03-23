@@ -35,7 +35,10 @@ void Server::AddUser(const User& newUser) {
 	_users.push_back(newUser);
 }
 
-void Server::AddUsersFromFile(std::string serverDataFile) {
+// TODO: id
+// probably better use json...
+// and somehow add sha
+void Server::AddUsersFromFile(const std::string serverDataFile) {
 	// first load a file with history: line by line
 	// Alexey - login;
 	// Messages - his messages
@@ -45,20 +48,23 @@ void Server::AddUsersFromFile(std::string serverDataFile) {
 	// our server contains of std::vector<User> _users;
 	ifstream server_file(serverDataFile);
 
-	//std::vector<User> usersInFile;
-
 	if (server_file.is_open()) {
 		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 		boost::char_separator<char> sep("|,;");
 
 		string line;
-		User tmpUser;
+		
 		while (getline(server_file, line)) {
+			User tmpUser;
 			tokenizer tokens(line, sep);
 			int counter = 0;
 			for (auto it = tokens.begin(); it != tokens.end(); ++it) {
 				if (counter == 0) {
 					tmpUser.SetLogin(*it);
+					counter++;
+				}
+				else if (counter == 1) {
+					tmpUser.SetPassword(*it);
 					counter++;
 				}
 				else {
@@ -70,14 +76,29 @@ void Server::AddUsersFromFile(std::string serverDataFile) {
 			_users.push_back(tmpUser);
 			tmpUser.DeleteMessages();
 		}
-		//cout << tmpUser.TotalNumberOfUsers() << endl;
-		//tmpUser.TotalNumberOfUsers() = -1;
-		tmpUser.TotalNumberOfUsers() = _users.size();
-		//cout << tmpUser.TotalNumberOfUsers() << endl;
-		//cout << usersInFile.size() << endl;
+		User::TotalNumberOfUsers() = _users.size(); 
+		_amountOfUsers = _users.size();
+		server_file.close();
 	}
-
-
+}
+// TODO: id 
+void Server::AddUsersToFile(const std::string serverDataFile) {
+	// we could have data in our file already
+	// easier just delete all 
+	// and then add all from server obj
+	// we have static id that is a problem 
+	ofstream server_file(serverDataFile, ios::trunc);
+	if (server_file.is_open()) {
+		for (int i = 0; i < _users.size(); ++i) {
+			server_file << _users[i].GetLogin() << "|";
+			server_file << _users[i].GetPassword() << "|";
+			for (int j = 0; j < _users[i].GetMessages().size(); ++j) {
+				server_file << _users[i].GetMessages()[j].second.GetMessage() << "|";
+			}
+			server_file << endl;
+		}
+		server_file.close();
+	}
 }
 
 bool Server::PassUser(const std::string password, const std::string login) {
@@ -135,7 +156,7 @@ void Server::ShowUserMessages(const int id) {
 }
 
 bool Server::ValidId(const int id) {
-	if (id >= 0 && id < _amountOfUsers && _amountOfUsers != 0)
+	if (id >= 0 && id <= _amountOfUsers && _amountOfUsers != 0)
 		return true;
 	return false;
 }

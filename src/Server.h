@@ -12,7 +12,8 @@ public:
 	void ShowUser(const int id);													// print info about user with id
 	void ShowAllUsers();
 	void AddUser(const User& newUser);												// registration
-	void AddUsersFromFile(std::string serverDataFile);
+	void AddUsersFromFile(const std::string serverDataFile);
+	void AddUsersToFile(const std::string serverDataFile);
 	void RemoveUserByID(const int id);		
 	unsigned int GetAmountOfUser();
 	void SendMessage(const int fromId, const int ToId, const std::string message);

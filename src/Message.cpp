@@ -7,7 +7,7 @@ Message::Message(string message) : _message(message) {
 const string& Message::GetMessage() const {
 	return _message;
 }
-
+/* 
 ifstream& operator>>(ifstream& is, Message& obj) {
 	is >> obj._message;
 	return is;
@@ -23,12 +23,11 @@ istream& operator >> (istream& is, Message& obj) {
 	return is;
 }
 
-
 ostream& operator<<(ostream& os, const Message& message) {
 	os << message._message << std::endl;
 	return os;
 }
-
+*/
 
 
 

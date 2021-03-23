@@ -48,5 +48,6 @@ public:
 	void DeleteMessages();
 	void ShowInfo();
 	void ShowMessages();
+	std::vector<std::pair<int, Message>> GetMessages();
 }; 
 

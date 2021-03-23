@@ -2,9 +2,7 @@
 #include "User.h"
 #include "Message.h"
 #include "Server.h"
-#include <conio.h>
-#include <boost/tokenizer.hpp>
-#include <filesystem>
+
 
 using namespace std;
 using namespace boost;
@@ -57,6 +55,7 @@ int main()
 		std::cout << "Imput your command:" << std::endl;
 		getline(std::cin, command);
 		if (command == "0") {
+			server.AddUsersToFile(serverDataFile);
 			break;
 		}	
 		else if (command == "help") {
@@ -78,6 +77,9 @@ int main()
 			std::cout << "input your age: ";
 			getline(std::cin, user.SetAge());
 
+			std::cout << "input you password:";
+			std::string pass = WrapPassword();
+			/* 
 			char ch;
 			std::string pass = "";
 			std::cout << "input your pass: ";
@@ -99,6 +101,7 @@ int main()
 					pass = pass + ch;
 				}
 			}
+			*/
 			user.SetPassword(pass);
 			server.AddUser(user);
 			std::cout << std::endl;
@@ -116,9 +119,9 @@ int main()
 			std::cout << "input your login:";
 			getline(std::cin, login);
 
-			std::string password;
 			std::cout << "input you password:";
-			getline(std::cin, password);
+			std::string password = WrapPassword();
+			//getline(std::cin, password);
 
 			if (server.PassUser(password, login)) {
 				server.LoginUser(login);
