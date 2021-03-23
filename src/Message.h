@@ -3,13 +3,12 @@
 #include <iostream>
 #include <ostream>
 #include <fstream>
-using namespace std;
 
 class Message {
 public:
-	Message(string message);
+	Message(std::string message);
 	~Message() = default;
-	const std::string& GetMessage() const;
+	const std::string& GetMyMessage() const;
 	/* 
 	friend ifstream& operator >>(std::ifstream& is, Message& obj);
 	friend ofstream& operator <<(std::ofstream& os, const Message& obj);
@@ -18,6 +17,6 @@ public:
 	friend ostream& operator <<(ostream& os, const Message& message);
 	*/
 private:
-	string _message;
+	std::string _message;
 };
 

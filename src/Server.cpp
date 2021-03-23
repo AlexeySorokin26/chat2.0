@@ -18,6 +18,44 @@ void Server::Help() const {
 		<< std::endl;
 }
 
+void Server::ShowOSInfo() const {
+
+#if defined(__linux__)
+	utsname us;
+	uname(&us);
+	std::cout << "OS name: " << utsname.sysname << std::endl;
+	std::cout << "Host name: " << utsname.nodename << std::endl;
+	std::cout << "OS release: " << utsname.release << std::endl;
+	std::cout << "OS version: " << utsname.version << std::endl;
+	std::cout << "Machine name: " << utsname.machine << std::endl;
+#else
+	OSVERSIONINFO osvi;
+	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	GetVersionEx(&osvi);
+	std::string res = "Windows ";
+	if (osvi.dwMajorVersion == 10)
+		res += "10";
+	else if (osvi.dwMajorVersion == 6) {
+		if (osvi.dwMinorVersion == 3)
+			res += "8.1";
+		else if (osvi.dwMinorVersion == 2)
+			res += "8";
+		else if (osvi.dwMinorVersion == 1)
+			res += "7";
+		else
+			res += "Vista";
+	}
+	else if (osvi.dwMajorVersion == 5) {
+		if (osvi.dwMinorVersion == 2)
+			res += "XP SP2";
+		else if (osvi.dwMinorVersion == 1)
+			res += "XP";
+	}
+	std::cout << "OS name: " << res << std::endl;
+#endif
+}
+
 void Server::ShowUser(const int id) {
 	if (ValidId(id))
 		_users[id].ShowInfo();
@@ -46,13 +84,13 @@ void Server::AddUsersFromFile(const std::string serverDataFile) {
 	// should contain registred users and their messages
 	// our user class contains of std::vector<std::pair<int, Message>> _receivedMessages;
 	// our server contains of std::vector<User> _users;
-	ifstream server_file(serverDataFile);
+	std::ifstream server_file(serverDataFile);
 
 	if (server_file.is_open()) {
 		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 		boost::char_separator<char> sep("|,;");
 
-		string line;
+		std::string line;
 		
 		while (getline(server_file, line)) {
 			User tmpUser;
@@ -87,15 +125,15 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 	// easier just delete all 
 	// and then add all from server obj
 	// we have static id that is a problem 
-	ofstream server_file(serverDataFile, ios::trunc);
+	std::ofstream server_file(serverDataFile, std::ios::trunc);
 	if (server_file.is_open()) {
 		for (int i = 0; i < _users.size(); ++i) {
 			server_file << _users[i].GetLogin() << "|";
 			server_file << _users[i].GetPassword() << "|";
 			for (int j = 0; j < _users[i].GetMessages().size(); ++j) {
-				server_file << _users[i].GetMessages()[j].second.GetMessage() << "|";
+				server_file << _users[i].GetMessages()[j].second.GetMyMessage() << "|";
 			}
-			server_file << endl;
+			server_file << std::endl;
 		}
 		server_file.close();
 	}
@@ -129,7 +167,7 @@ unsigned int Server::GetAmountOfUser() {
 	return _amountOfUsers;
 }
 
-void Server::SendMessage(const int fromId, const int ToId, const std::string message) {
+void Server::SendMyMessage(const int fromId, const int ToId, const std::string message) {
 	if (ValidId(fromId) && ValidId(ToId))
 		_users[ToId].AddMessageWithId(std::make_pair(fromId, message));
 	else

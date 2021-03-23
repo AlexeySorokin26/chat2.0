@@ -1,54 +1,15 @@
-#include <iostream>
-#include "User.h"
-#include "Message.h"
 #include "Server.h"
-
-
-using namespace std;
-using namespace boost;
-namespace fs = std::filesystem;
 
 int main()
 {
-		
 	std::string serverDataFile = "server_file.txt";
-	/*
-	ifstream server_file(serverDataFile);
-	
-	std::vector<User> usersInFile;
-
-	if (server_file.is_open()) {
-		typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
-		boost::char_separator<char> sep("|,;");
-
-		string line;
-		User tmpUser;
-		while (getline(server_file, line)) {
-			tokenizer tokens(line, sep);
-			int counter = 0;
-			for (auto it = tokens.begin(); it != tokens.end(); ++it) {
-				if (counter == 0) {
-					tmpUser.SetLogin(*it);
-					counter++;
-				}
-				else {
-					tmpUser.AddMessageWithId(std::make_pair(0, *it));
-					counter++;
-				}
-				
-			}
-			usersInFile.push_back(tmpUser);
-			tmpUser.DeleteMessages();
-		}
-		cout << usersInFile.size() << endl;
-	}
-	 */
 
 	Server server;
 	server.AddUsersFromFile(serverDataFile);
 
 	std::string command = ""; 
-	server.Help(); // show how to use our server
+	server.ShowOSInfo(); // show info about OS
+	server.Help();		 // show how to use our server
 
 	while (true) {
 		std::cout << "------------------------------------" << std::endl;
@@ -62,9 +23,7 @@ int main()
 			server.Help();
 		}
 		else if (command == "new user"){
-			//std::cout << User::TotalNumberOfUsers() << std::endl;
 			User user;
-			//std::cout << User::TotalNumberOfUsers() << std::endl;
 			std::cout << "input your login: ";
 			getline(std::cin, user.SetLogin());
 
@@ -79,30 +38,8 @@ int main()
 
 			std::cout << "input you password:";
 			std::string pass = WrapPassword();
-			/* 
-			char ch;
-			std::string pass = "";
-			std::cout << "input your pass: ";
-			while (true) {
-				ch = _getch(); // get elements without printing them
-				if (ch == 13) // enter
-					break;
-				else if (ch == 8) { // backspace or delete previous element
-					// need to move a cursor back 
-					std::cout << (char)8 << ' ' << (char)8;
-					// it is a console trick; if we put 8 of char than it's like a backspace
-					// and delete one element (we use just ' ') from our pass and from a console 
-					// and move back one more time
-					if (!pass.empty())
-						pass.erase(pass.size() - 1); // keep a string size of pass.size() - 1; other delete
-				}
-				else {
-					std::cout << "*";
-					pass = pass + ch;
-				}
-			}
-			*/
 			user.SetPassword(pass);
+
 			server.AddUser(user);
 			std::cout << std::endl;
 		}
@@ -112,16 +49,13 @@ int main()
 			getline(std::cin, id);
 			server.ShowUser(stoi(id));
 		}
-		else if (command == "login") {
-			//User user;
-			
+		else if (command == "login") {			
 			std::string login;
 			std::cout << "input your login:";
 			getline(std::cin, login);
 
 			std::cout << "input you password:";
 			std::string password = WrapPassword();
-			//getline(std::cin, password);
 
 			if (server.PassUser(password, login)) {
 				server.LoginUser(login);
@@ -144,7 +78,7 @@ int main()
 			std::string message;
 			getline(std::cin, message);
 			if (server.Loginned(stoi(fromId)))
-				server.SendMessage(stoi(fromId), stoi(toId), message);
+				server.SendMyMessage(stoi(fromId), stoi(toId), message);
 			else
 				std::cout << "your should login first!" << std::endl;
 		}

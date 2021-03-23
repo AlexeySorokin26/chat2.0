@@ -1,6 +1,6 @@
 #include "User.h"
 
-int User::counter_of_users = 0; // id of users will start from 0; 
+size_t User::counter_of_users = 0; // id of users will start from 0; 
 
 User::User(std::string login, std::string password, std::string name, std::string surname, std::string age, bool loggined)
 	: _login(login), _password(password), _name(name), _surname(surname), _age(age), _loggined(loggined) {
@@ -8,11 +8,11 @@ User::User(std::string login, std::string password, std::string name, std::strin
 	counter_of_users++;
 }
 
-int User::Id() const {
+size_t User::Id() const {
 	return id;
 }
 
-int& User::TotalNumberOfUsers() {
+size_t& User::TotalNumberOfUsers() {
 	return counter_of_users;
 }
 
@@ -48,7 +48,7 @@ unsigned int User::AgeToUInt() {
 		return stoi(_age);
 	}
 	else {
-		TypeYourAgeAgain();
+		return TypeYourAgeAgain();
 	}
 }
 
@@ -62,9 +62,7 @@ unsigned int User::TypeYourAgeAgain() {
 			_age = age;
 			return stoi(_age);
 		}
-		else {
-			std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
-		}
+		std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
 	}
 }
 
@@ -116,7 +114,7 @@ void User::ShowInfo() {
 void User::ShowMessages() {
 	if (_receivedMessages.size() != 0) {
 		for(int i = 0; i < _receivedMessages.size(); ++i)
-			std::cout << "message from user with id: " << _receivedMessages[i].first << " a message: " << _receivedMessages[i].second.GetMessage() << std::endl;
+			std::cout << "message from user with id: " << _receivedMessages[i].first << " a message: " << _receivedMessages[i].second.GetMyMessage() << std::endl;
 		/* 
 		for (const auto& sm : _receivedMessages)
 			std::cout << "message from user with id: " << sm.first. << " a message: " << sm.second << std::endl;

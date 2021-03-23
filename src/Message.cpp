@@ -1,12 +1,14 @@
 #include "Message.h"
 
-Message::Message(string message) : _message(message) {
+Message::Message(std::string message) : _message(message) {
 
 }
 
-const string& Message::GetMessage() const {
-	return _message;
+const std::string& Message::GetMyMessage() const {
+		return _message;
 }
+
+
 /* 
 ifstream& operator>>(ifstream& is, Message& obj) {
 	is >> obj._message;

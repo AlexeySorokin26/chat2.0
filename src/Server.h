@@ -4,11 +4,21 @@
 #include <boost/tokenizer.hpp>
 #include <filesystem>
 
+
+#if defined(__linux__)
+#include <sys/utsname.h>  //uname
+#else
+#include <stdio.h>
+#include <windows.h>
+#endif
+
+
 class Server {
 public:
 	Server(unsigned int amountOfUsers = 0);
 	~Server() = default;
 	void Help() const;																// how to use our server
+	void ShowOSInfo() const;
 	void ShowUser(const int id);													// print info about user with id
 	void ShowAllUsers();
 	void AddUser(const User& newUser);												// registration
@@ -16,7 +26,7 @@ public:
 	void AddUsersToFile(const std::string serverDataFile);
 	void RemoveUserByID(const int id);		
 	unsigned int GetAmountOfUser();
-	void SendMessage(const int fromId, const int ToId, const std::string message);
+	void SendMyMessage(const int fromId, const int ToId, const std::string message);
 	void SendMessageToAll(const int fromId, const std::string message);
 	void ShowUserMessages(const int id);
 	bool ValidId(const int id);

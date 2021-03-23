@@ -15,13 +15,13 @@ private:
 	std::string _surname;
 	std::string _age;
 	bool _loggined;  // if a user is loggined 
-	int id;
-	static int counter_of_users;
+	size_t id;
+	static size_t counter_of_users;
 public:
 	User(std::string login="nologin", std::string password="nopassword", std::string name="noname", std::string surname="noname", std::string age="0", bool loggined=false);
 	~User() = default;
-	int Id() const;
-	static int& TotalNumberOfUsers();
+	size_t Id() const;
+	static size_t& TotalNumberOfUsers();
 
 	const std::string& GetName() const;
 	std::string& SetName(const std::string otherName="noname");
