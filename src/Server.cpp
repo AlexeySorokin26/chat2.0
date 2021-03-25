@@ -23,11 +23,11 @@ void Server::ShowOSInfo() const {
 #if defined(__linux__)
 	utsname us;
 	uname(&us);
-	std::cout << "OS name: " << utsname.sysname << std::endl;
-	std::cout << "Host name: " << utsname.nodename << std::endl;
-	std::cout << "OS release: " << utsname.release << std::endl;
-	std::cout << "OS version: " << utsname.version << std::endl;
-	std::cout << "Machine name: " << utsname.machine << std::endl;
+	std::cout << "OS name: " << us.sysname << std::endl;
+	std::cout << "Host name: " << us.nodename << std::endl;
+	std::cout << "OS release: " << us.release << std::endl;
+	std::cout << "OS version: " << us.version << std::endl;
+	std::cout << "Machine name: " << us.machine << std::endl;
 #else
 	OSVERSIONINFO osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
