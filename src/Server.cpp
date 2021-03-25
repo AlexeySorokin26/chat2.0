@@ -136,7 +136,7 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 			server_file << std::endl;
 		}
 		// before 
-		demo_perms(fs::status(serverDataFile).permissions());
+		//demo_perms(fs::status(serverDataFile).permissions());
 #if defined(__linux__)
 		std::filesystem::permissions(serverDataFile, 
 			std::filesystem::perms::group_all | std::filesystem::perms::others_all,
@@ -146,7 +146,7 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 			fs::perms::owner_write | fs::perms::group_write,
 			std::filesystem::perm_options::remove);
 #endif
-		demo_perms(fs::status(serverDataFile).permissions());
+		//demo_perms(fs::status(serverDataFile).permissions());
 		// after
 		server_file.close();
 	}

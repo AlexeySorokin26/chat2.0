@@ -11,7 +11,8 @@ std::string WrapPassword() {
 	std::string pass = "";
 #if defined(__linux__)
 	getline(std::cin, pass);
-#else
+	return pass;
+#endif
 	while (true) {
 		ch = _getch(); // get elements without printing them
 		if (ch == 13)  // enter
@@ -29,8 +30,6 @@ std::string WrapPassword() {
 			std::cout << "*";
 			pass = pass + ch;
 		}
-#endif
-	
 	}
 	return pass;
 }
