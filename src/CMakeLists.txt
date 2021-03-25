@@ -24,7 +24,7 @@ add_library(UtilityLib ${UTILIY_SRC})
 if(Boost_FOUND)
 	message(STATUS "found boost")	
 	include_directories(${Boost_INCLUDE_DIRS})
-	add_executable(Chat Chat.cpp)
+	add_executable(Chat chat.cpp)
 	target_link_libraries(Chat UserLib MessageLib ServerLib UtilityLib ${Boost_LIBRARIES})
 endif()
 
