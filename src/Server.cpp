@@ -207,7 +207,7 @@ void Server::ShowUserMessages(const size_t id) {
 }
 
 bool Server::ValidId(const size_t id) {
-	if (id >= 0 && id <= _amountOfUsers && _amountOfUsers != 0)
+	if (id <= _amountOfUsers && _amountOfUsers != 0)
 		return true;
 	return false;
 }
