@@ -127,10 +127,10 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 	// we have static id that is a problem 
 	std::ofstream server_file(serverDataFile, std::ios::trunc);
 	if (server_file.is_open()) {
-		for (int i = 0; i < _users.size(); ++i) {
+		for (size_t i = 0; i < _users.size(); ++i) {
 			server_file << _users[i].GetLogin() << "|";
 			server_file << _users[i].GetPassword() << "|";
-			for (int j = 0; j < _users[i].GetMessages().size(); ++j) {
+			for (size_t j = 0; j < _users[i].GetMessages().size(); ++j) {
 				server_file << _users[i].GetMessages()[j].second.GetMyMessage() << "|";
 			}
 			server_file << std::endl;
@@ -168,7 +168,7 @@ bool Server::PassUser(const std::string password, const std::string login) {
 	return (checkerLogin && checkerPassword);
 }
 
-void Server::RemoveUserByID(const int id) {
+void Server::RemoveUserByID(const size_t id) {
 	
 	if(ValidId(id))
 		_users.erase(_users.begin() + id);
@@ -180,14 +180,14 @@ unsigned int Server::GetAmountOfUser() {
 	return _amountOfUsers;
 }
 
-void Server::SendMyMessage(const int fromId, const int ToId, const std::string message) {
+void Server::SendMyMessage(const size_t fromId, const size_t ToId, const std::string message) {
 	if (ValidId(fromId) && ValidId(ToId))
 		_users[ToId].AddMessageWithId(std::make_pair(fromId, message));
 	else
 		std::cout << "we could not send a message!" << std::endl;
 }
 
-void Server::SendMessageToAll(const int fromId, const std::string message) {
+void Server::SendMessageToAll(const size_t fromId, const std::string message) {
 	if (ValidId(fromId)) {
 		for (auto& u : _users) 
 			if (u.Id() != fromId) // send message to all except yourself
@@ -197,7 +197,7 @@ void Server::SendMessageToAll(const int fromId, const std::string message) {
 		std::cout << "we could not send a message!" << std::endl;
 }
 
-void Server::ShowUserMessages(const int id) {
+void Server::ShowUserMessages(const size_t id) {
 	if (ValidId(id)) {
 		std::cout << "messages of user with id: " << id << std::endl;
 		_users[id].ShowMessages();
@@ -206,13 +206,13 @@ void Server::ShowUserMessages(const int id) {
 		std::cout << "your id is not valid!" << std::endl;
 }
 
-bool Server::ValidId(const int id) {
+bool Server::ValidId(const size_t id) {
 	if (id >= 0 && id <= _amountOfUsers && _amountOfUsers != 0)
 		return true;
 	return false;
 }
 
-bool Server::Loginned(const int id) {
+bool Server::Loginned(const size_t id) {
 	if (ValidId(id))  // if we have such id and user loggined
 		return _users[id].GetLoggined();
 	return false;
@@ -226,7 +226,7 @@ void Server::LoginUser(const std::string login) {
 			u.SetLoggined() = true;
 }
 
-void Server::Logout(const int id) {
+void Server::Logout(const size_t id) {
 	if (ValidId(id) && _users[id].GetLoggined())
 		_users[id].SetLoggined() = false;
 	else 

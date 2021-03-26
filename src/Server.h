@@ -24,16 +24,16 @@ public:
 	void AddUser(const User& newUser);												// registration
 	void AddUsersFromFile(const std::string serverDataFile);
 	void AddUsersToFile(const std::string serverDataFile);
-	void RemoveUserByID(const int id);		
+	void RemoveUserByID(const size_t id);
 	unsigned int GetAmountOfUser();
-	void SendMyMessage(const int fromId, const int ToId, const std::string message);
-	void SendMessageToAll(const int fromId, const std::string message);
-	void ShowUserMessages(const int id);
-	bool ValidId(const int id);
+	void SendMyMessage(const size_t fromId, const size_t ToId, const std::string message);
+	void SendMessageToAll(const size_t fromId, const std::string message);
+	void ShowUserMessages(const size_t id);
+	bool ValidId(const size_t id);
 	bool PassUser(const std::string password, const std::string login);				// check if user enter his/her password and login correctly if so then enter his/her to the chat
-	bool Loginned(const int id);													// check if a user is _loggined
+	bool Loginned(const size_t id);													// check if a user is _loggined
 	void LoginUser(const std::string login);										// to set _loggined of user to true;
-	void Logout(const int id);
+	void Logout(const size_t id);
 	int GetIdByLogin(const std::string login);
 private:
 	std::vector<User> _users;														// id-User ?maybe better to use a list or deque; 

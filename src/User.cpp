@@ -64,6 +64,7 @@ unsigned int User::TypeYourAgeAgain() {
 		}
 		std::cout << "You typed your age wrong. Would you like to set it correctly? Type yes if you want it or no to finish." << std::endl;
 	}
+	return stoi(_age);
 }
 
 
@@ -113,7 +114,7 @@ void User::ShowInfo() {
 
 void User::ShowMessages() {
 	if (_receivedMessages.size() != 0) {
-		for(int i = 0; i < _receivedMessages.size(); ++i)
+		for(size_t i = 0; i < _receivedMessages.size(); ++i)
 			std::cout << "message from user with id: " << _receivedMessages[i].first << " a message: " << _receivedMessages[i].second.GetMyMessage() << std::endl;
 		/* 
 		for (const auto& sm : _receivedMessages)

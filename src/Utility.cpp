@@ -7,11 +7,11 @@ bool IsStringNumber(const std::string& s) {
 }
 
 std::string WrapPassword() {
-	char ch;
 	std::string pass = "";
 #if defined(__linux__)
 	getline(std::cin, pass);
 #else
+	char ch;
 	while (true) {
 		ch = _getch(); // get elements without printing them
 		if (ch == 13)  // enter
