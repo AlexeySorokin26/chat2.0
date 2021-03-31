@@ -9,12 +9,12 @@ public:
 	Message(std::string message);
 	~Message() = default;
 	const std::string& GetMyMessage() const;
-	/* 
-	friend ifstream& operator >>(std::ifstream& is, Message& obj);
-	friend ofstream& operator <<(std::ofstream& os, const Message& obj);
+	/*
+	friend std::ifstream& operator >>(std::ifstream& is, Message& obj);
+	friend std::ofstream& operator <<(std::ofstream& os, const Message& obj);
 	
-	friend istream& operator >>(istream& is, Message& obj);
-	friend ostream& operator <<(ostream& os, const Message& message);
+	friend std::istream& operator >>(std::istream& is, Message& obj);
+	friend std::ostream& operator <<(std::ostream& os, const Message& message);
 	*/
 private:
 	std::string _message;

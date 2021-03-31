@@ -132,8 +132,9 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 			server_file << _users[i].GetPassword() << "|";
 			for (size_t j = 0; j < _users[i].GetMessages().size(); ++j) {
 				server_file << _users[i].GetMessages()[j].second.GetMyMessage() << "|";
+				//server_file << _users[i].GetMessages()[j].second << "|";
 			}
-			server_file << std::endl;
+			//server_file << std::endl;
 		}
 		// before 
 		//demo_perms(fs::status(serverDataFile).permissions());
