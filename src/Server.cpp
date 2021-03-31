@@ -52,15 +52,16 @@ std::string Server::ReadCommand() {
 	char message[MESSAGE_LENGTH];
 	bzero(message, MESSAGE_LENGTH);
  	read(_connection, message, sizeof(message));
-	std::cout << "got message from user: " << message << std::endl;
+	
 	return std::string(message);
 }
 
 ssize_t Server::SendCommand() {
-	char message[MESSAGE_LENGTH];
+	//char message[MESSAGE_LENGTH];
+	std::string message;
 	std::cout << "Enter the message you want to send to the client: " << std::endl;
     std::cin >> message;
-	ssize_t bytes = write(_connection, message, sizeof(message));
+	ssize_t bytes = write(_connection, message.c_str(), sizeof(message));
 	return bytes;
 }
 void Server::Help() const {

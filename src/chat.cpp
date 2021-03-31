@@ -24,7 +24,7 @@ int main()
 		//std::cout << "Imput your command:" << std::endl;
 		//getline(std::cin, command);
 		command = server.ReadCommand();
-		std::cout << "got message from user: " << command << std::endl;
+		//std::cout << "got message from user: " << command << std::endl;
 		if (command == "0" || command == "end") {
 			std::cout << "Client Exited." << std::endl;
 			std::cout << "Server is Exiting..!" << std::endl;
@@ -35,7 +35,7 @@ int main()
 			server.Help();
 			server.SendCommand();
 		}
-		else if (command == "new user"){
+		else if (command == "newUser"){
 			User user;
 			std::cout << "input your login: ";
 			getline(std::cin, user.SetLogin());
@@ -55,12 +55,14 @@ int main()
 
 			server.AddUser(user);
 			std::cout << std::endl;
+			server.SendCommand();
 		}
-		else if (command == "show info") {
+		else if (command == "showInfo") {
 			std::cout << "which id should we show? input your id:";
 			std::string id;
 			getline(std::cin, id);
 			server.ShowUser(stoi(id));
+			server.SendCommand();
 		}
 		else if (command == "login") {			
 			std::string login;
@@ -79,6 +81,7 @@ int main()
 			else {
 				std::cout << "your data is not correct - > cannot login you" << std::endl;
 			}
+			server.SendCommand();
 		}
 		else if (command == "message") {
 			std::cout << "input your id: "; 
@@ -94,14 +97,17 @@ int main()
 				server.SendMyMessage(stoul(fromId), stoul(toId), message);
 			else
 				std::cout << "your should login first!" << std::endl;
+			server.SendCommand();
 		}
-		else if (command == "show all") {
+		else if (command == "showAll") {
 			server.ShowAllUsers();
+			server.SendCommand();
 		}
 		else if (command == "umessage") {
 			std::cout << "input an id of user to show:" << std::endl;
 			std::string id; getline(std::cin, id);
 			server.ShowUserMessages(stoul(id));
+			server.SendCommand();
 		}
 		else if (command == "messageAll") {
 			std::cout << "input your id: ";
@@ -111,13 +117,22 @@ int main()
 			std::string message;
 			getline(std::cin, message);
 			server.SendMessageToAll(stoul(fromId), message);
+			server.SendCommand();
 		}
 		else if (command == "logout") {
 			std::cout << "input your id: ";
 			std::string id;
 			getline(std::cin, id);
 			server.Logout(stoul(id));
+			server.SendCommand();
 		}
+		else{
+			std::cout << "Got from user message: " << command << std::endl;
+			std::cout << "We should answer!" << std::endl;
+			server.SendCommand();
+		}
+		
+
    }
    
 }

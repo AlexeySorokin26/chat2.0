@@ -38,13 +38,14 @@ std::string Client::ReadCommand() {
     return std::string(message);
 }
 ssize_t Client::SendCommand() {
-    char message[MESSAGE_LENGTH];
+    //char message[MESSAGE_LENGTH];
+    std::string message;
     std::cin >> message;
-    if ((strncmp(message, "0", 3)) == 0 ) {
-        write(_socket_file_descriptor, message, sizeof(message));
+    if (message == "0" ) {
+        write(_socket_file_descriptor, message.c_str(), sizeof(message));
         std::cout << "Client Exit." << std::endl;
         return -1;
     }
-    ssize_t bytes = write(_socket_file_descriptor, message, sizeof(message));
+    ssize_t bytes = write(_socket_file_descriptor, message.c_str(), sizeof(message));
     return bytes;
 }
