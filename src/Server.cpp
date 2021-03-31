@@ -48,14 +48,15 @@ MY_SERVER_ERRORS Server::SetServer(){
 	return MY_SERVER_ERRORS::OK;
 }
 
-std::string Server::ReadCommand(){
+std::string Server::ReadCommand() {
 	char message[MESSAGE_LENGTH];
 	bzero(message, MESSAGE_LENGTH);
  	read(_connection, message, sizeof(message));
+	std::cout << "got message from user: " << message << std::endl;
 	return std::string(message);
 }
 
-ssize_t Server::SendCommand(){
+ssize_t Server::SendCommand() {
 	char message[MESSAGE_LENGTH];
 	std::cout << "Enter the message you want to send to the client: " << std::endl;
     std::cin >> message;

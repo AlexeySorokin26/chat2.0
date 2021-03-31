@@ -20,10 +20,11 @@ int main()
 	std::string command = ""; 
 	
 	while (true) {
-		std::cout << "------------------------------------" << std::endl;
+		//std::cout << "------------------------------------" << std::endl;
 		//std::cout << "Imput your command:" << std::endl;
 		//getline(std::cin, command);
 		command = server.ReadCommand();
+		std::cout << "got message from user: " << command << std::endl;
 		if (command == "0" || command == "end") {
 			std::cout << "Client Exited." << std::endl;
 			std::cout << "Server is Exiting..!" << std::endl;
@@ -32,6 +33,7 @@ int main()
 		}	
 		else if (command == "help") {
 			server.Help();
+			server.SendCommand();
 		}
 		else if (command == "new user"){
 			User user;
