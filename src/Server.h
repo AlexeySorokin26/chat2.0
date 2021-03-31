@@ -4,11 +4,11 @@
 #include <boost/tokenizer.hpp>
 #include <filesystem>
 #include "Utility.h"
-
+#include <string.h>
 #if defined(__linux__)
 #include <unistd.h>
 #include <sys/socket.h>
-#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <sys/utsname.h>  //uname
 #define MESSAGE_LENGTH 1024 // Максимальный размер буфера для данных
 #define PORT 7777 // Будем использовать этот номер порта
@@ -19,9 +19,11 @@
 
 class Server {
 public:
-	Server(unsigned int amountOfUsers = 0);
-	~Server() = default;
+	Server(unsigned int amountOfUsers = 0, const int connection = -1);
+	~Server();
 	MY_SERVER_ERRORS SetServer();
+	std::string ReadCommand();
+	ssize_t SendCommand();
 	void Help() const;																// how to use our server
 	void ShowOSInfo() const;
 	void ShowUser(const int id);													// print info about user with id
@@ -43,5 +45,7 @@ public:
 private:
 	std::vector<User> _users;														// id-User ?maybe better to use a list or deque; 
 	unsigned int _amountOfUsers;
+	int _connection;
+	int _socket_file_descriptor;
 };
 

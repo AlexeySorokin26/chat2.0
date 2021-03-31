@@ -1,17 +1,19 @@
 #include "Server.h"
 
-Server::Server(unsigned int amountOfUsers) : _amountOfUsers(amountOfUsers) { }
+Server::Server(unsigned int amountOfUsers, const int connection) : _amountOfUsers(amountOfUsers), _connection(connection) { }
 
+Server::~Server(){
+	close(_socket_file_descriptor);
+}
 MY_SERVER_ERRORS Server::SetServer(){	 
 	//const char* ip_address = "192.168.126.129";
 	socklen_t length;
 	sockaddr_in serveraddress, client;
-	int socket_file_descriptor, connection, bind_status, connection_status;
-	//char message[MESSAGE_LENGTH];
+	int bind_status, connection_status;
 	
 	// create a socket
-    socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
-    if(socket_file_descriptor == -1){
+    _socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
+    if(_socket_file_descriptor == -1){
         std::cout << "Creation of Socket failed!" << std::endl;
         return MY_SERVER_ERRORS::SOCKET_CREATION_FAULT;
     }
@@ -22,13 +24,13 @@ MY_SERVER_ERRORS Server::SetServer(){
 	 // use IPv4
     serveraddress.sin_family = AF_INET;
 	 // bind a socket
-    bind_status = bind(socket_file_descriptor, (struct sockaddr*)&serveraddress, sizeof(serveraddress));
+    bind_status = bind(_socket_file_descriptor, (struct sockaddr*)&serveraddress, sizeof(serveraddress));
 	if(bind_status == -1)  {
         std::cout << "Socket binding failed.!" << std::endl;
         return MY_SERVER_ERRORS::SOCKET_BINDING_FAULT;
     }
 	// set a server to get a data 
-    connection_status = listen(socket_file_descriptor, 5);
+    connection_status = listen(_socket_file_descriptor, 5);
     if(connection_status == -1){
         std::cout << "Socket is unable to listen for new connections.!" << std::endl;
         return MY_SERVER_ERRORS::LISTEN_FAULT;
@@ -36,19 +38,28 @@ MY_SERVER_ERRORS Server::SetServer(){
             std::cout << "Server is listening for new connection: " << std::endl;
     }
 	length = sizeof(client);
-    connection = accept(socket_file_descriptor, (struct sockaddr*)&client, &length);
-    if(connection == -1)  {
+    _connection = accept(_socket_file_descriptor, (struct sockaddr*)&client, &length);
+    if(_connection == -1)  {
         std::cout << "Server is unable to accept the data from client.!" << std::endl;
         return MY_SERVER_ERRORS::CANT_ACCEPT_DATA_FROM_CLIENT;
     }	
-
-	
-
-
 	return MY_SERVER_ERRORS::OK;
 }
 
+std::string Server::ReadCommand(){
+	char message[MESSAGE_LENGTH];
+	bzero(message, MESSAGE_LENGTH);
+ 	read(_connection, message, sizeof(message));
+	return std::string(message);
+}
 
+ssize_t Server::SendCommand(){
+	char message[MESSAGE_LENGTH];
+	std::cout << "Enter the message you want to send to the client: " << std::endl;
+    std::cin >> message;
+	ssize_t bytes = write(_connection, message, sizeof(message));
+	return bytes;
+}
 void Server::Help() const {
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "Help information about our server: \n"

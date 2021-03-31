@@ -19,12 +19,14 @@ int main()
 
 	std::string command = ""; 
 	
-
 	while (true) {
 		std::cout << "------------------------------------" << std::endl;
-		std::cout << "Imput your command:" << std::endl;
-		getline(std::cin, command);
-		if (command == "0") {
+		//std::cout << "Imput your command:" << std::endl;
+		//getline(std::cin, command);
+		command = server.ReadCommand();
+		if (command == "0" || command == "end") {
+			std::cout << "Client Exited." << std::endl;
+			std::cout << "Server is Exiting..!" << std::endl;
 			server.AddUsersToFile(serverDataFile);
 			break;
 		}	
