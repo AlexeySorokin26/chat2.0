@@ -16,6 +16,7 @@ endif()
 
 
 set(USER_SRC User.cpp User.h)
+set(CLIENT_SRC Client.cpp Client.h)
 set(MESSAGE_SRC Message.cpp Message.h)
 set(SERVER_SRC Server.cpp Server.h)
 set(UTILIY_SRC Utility.cpp Utility.h)
@@ -25,6 +26,7 @@ set(UTILIY_SRC Utility.cpp Utility.h)
 find_package(Boost REQUIRED COMPONENTS filesystem iostreams system regex chrono timer program_options unit_test_framework)
 
 add_library(UserLib ${USER_SRC})
+add_library(ClientLib ${CLIENT_SRC})
 add_library(MessageLib ${MESSAGE_SRC})
 add_library(ServerLib ${SERVER_SRC})
 add_library(UtilityLib ${UTILIY_SRC})
@@ -34,5 +36,7 @@ if(Boost_FOUND)
 	include_directories(${Boost_INCLUDE_DIRS})
 	add_executable(Chat chat.cpp)
 	target_link_libraries(Chat UserLib MessageLib ServerLib UtilityLib ${Boost_LIBRARIES})
+	add_executable(ChatClient chatClient.cpp)
+	target_link_libraries(ChatClient UserLib ClientLib MessageLib UtilityLib ${Boost_LIBRARIES})
 endif()
 

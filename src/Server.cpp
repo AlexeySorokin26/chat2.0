@@ -5,6 +5,7 @@ Server::Server(unsigned int amountOfUsers, const int connection) : _amountOfUser
 Server::~Server(){
 	close(_socket_file_descriptor);
 }
+
 MY_SERVER_ERRORS Server::SetServer(){	 
 	//const char* ip_address = "192.168.126.129";
 	socklen_t length;
