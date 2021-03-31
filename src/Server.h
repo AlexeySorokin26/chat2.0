@@ -6,17 +6,22 @@
 #include "Utility.h"
 
 #if defined(__linux__)
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 #include <sys/utsname.h>  //uname
+#define MESSAGE_LENGTH 1024 // Максимальный размер буфера для данных
+#define PORT 7777 // Будем использовать этот номер порта
 #else
 #include <stdio.h>
 #include <windows.h>
 #endif
 
-
 class Server {
 public:
 	Server(unsigned int amountOfUsers = 0);
 	~Server() = default;
+	MY_SERVER_ERRORS SetServer();
 	void Help() const;																// how to use our server
 	void ShowOSInfo() const;
 	void ShowUser(const int id);													// print info about user with id

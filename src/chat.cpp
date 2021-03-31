@@ -6,10 +6,19 @@ int main()
 
 	Server server;
 	server.AddUsersFromFile(serverDataFile);
-
-	std::string command = ""; 
 	server.ShowOSInfo(); // show info about OS
 	server.Help();		 // show how to use our server
+	
+	if(server.SetServer() == 1){
+		std::cout << "set up server successfully, waiting for users" << std::endl;
+	}
+	else{
+		std::cout << "set up server failed" << std::endl;
+		exit(1);
+	}
+
+	std::string command = ""; 
+	
 
 	while (true) {
 		std::cout << "------------------------------------" << std::endl;
