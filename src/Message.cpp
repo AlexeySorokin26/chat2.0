@@ -1,6 +1,6 @@
 #include "Message.h"
 
-Message::Message(std::string message) : _message(message) {
+Message::Message(std::string message) : _message(std::move(message)) {
 
 }
 

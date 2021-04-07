@@ -9,6 +9,8 @@ Client::~Client() {
 }
 MY_SERVER_ERRORS Client::SetServer() {
     const char* ip_address = "192.168.126.129";
+    //const char* ip_address = "81.177.136.104";
+    
     // Создадим сокет
     sockaddr_in serveraddress;
     _socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -25,7 +27,7 @@ MY_SERVER_ERRORS Client::SetServer() {
     // Установим соединение с сервером
     _connection = connect(_socket_file_descriptor, (struct sockaddr*)&serveraddress, sizeof(serveraddress));
     if(_connection == -1){
-        std::cout << "Connection with the server failed.!" << std::endl;
+        std::cout << "Connection with the server failed!" << std::endl;
         return MY_SERVER_ERRORS::CANT_CONNECT_WITH_SERVER;
     }
     return MY_SERVER_ERRORS::OK;

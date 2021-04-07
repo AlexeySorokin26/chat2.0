@@ -113,7 +113,7 @@ void User::ShowInfo() {
 }
 
 void User::ShowMessages() {
-	if (_receivedMessages.size() != 0) {
+	if (!_receivedMessages.empty()) {
 		for(size_t i = 0; i < _receivedMessages.size(); ++i)
 			std::cout << "message from user with id: " << _receivedMessages[i].first << " a message: " << _receivedMessages[i].second.GetMyMessage() << std::endl;
 		/* 

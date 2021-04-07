@@ -64,6 +64,7 @@ ssize_t Server::SendCommand() {
 	ssize_t bytes = write(_connection, message.c_str(), sizeof(message));
 	return bytes;
 }
+
 void Server::Help() const {
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "Help information about our server: \n"
@@ -138,7 +139,7 @@ void Server::AddUser(const User& newUser) {
 // TODO: id
 // probably better use json...
 // and somehow add sha
-void Server::AddUsersFromFile(const std::string serverDataFile) {
+void Server::AddUsersFromFile(const std::string& serverDataFile) {
 	// first load a file with history: line by line
 	// Alexey - login;
 	// Messages - his messages
@@ -182,7 +183,7 @@ void Server::AddUsersFromFile(const std::string serverDataFile) {
 	}
 }
 // TODO: id 
-void Server::AddUsersToFile(const std::string serverDataFile) {
+void Server::AddUsersToFile(const std::string& serverDataFile) {
 	// we could have data in our file already
 	// easier just delete all 
 	// and then add all from server obj
@@ -215,7 +216,7 @@ void Server::AddUsersToFile(const std::string serverDataFile) {
 	}
 }
 
-bool Server::PassUser(const std::string password, const std::string login) {
+bool Server::PassUser(const std::string& password, const std::string& login) {
 	// first we should check if we have such user with a given login
 	// second we should check his/her inputted password
 	bool checkerLogin = false;
@@ -243,14 +244,14 @@ unsigned int Server::GetAmountOfUser() {
 	return _amountOfUsers;
 }
 
-void Server::SendMyMessage(const size_t fromId, const size_t ToId, const std::string message) {
+void Server::SendMyMessage(const size_t fromId, const size_t ToId, const std::string& message) {
 	if (ValidId(fromId) && ValidId(ToId))
 		_users[ToId].AddMessageWithId(std::make_pair(fromId, message));
 	else
 		std::cout << "we could not send a message!" << std::endl;
 }
 
-void Server::SendMessageToAll(const size_t fromId, const std::string message) {
+void Server::SendMessageToAll(const size_t fromId, const std::string& message) {
 	if (ValidId(fromId)) {
 		for (auto& u : _users) 
 			if (u.Id() != fromId) // send message to all except yourself
@@ -281,7 +282,7 @@ bool Server::Loginned(const size_t id) {
 	return false;
 }
 
-void Server::LoginUser(const std::string login) {
+void Server::LoginUser(const std::string& login) {
 	// first we should find a user id with such login
 	// next should set his _loggined to true
 	for (auto& u : _users)
@@ -296,7 +297,7 @@ void Server::Logout(const size_t id) {
 		std::cout << "your id is not valid!" << std::endl;
 }
 
-int Server::GetIdByLogin(const std::string login) {
+int Server::GetIdByLogin(const std::string& login) {
 	for (auto& u : _users)
 		if (u.GetLogin() == login)
 			return u.Id();
