@@ -8,7 +8,7 @@ Client::~Client() {
     close(_socket_file_descriptor);
 }
 MY_SERVER_ERRORS Client::SetServer() {
-    const char* ip_address = "192.168.126.129";
+    const char* ip_address = "192.168.126.128";
     //const char* ip_address = "81.177.136.104";
     
     // Создадим сокет

@@ -5,7 +5,8 @@ int main()
 	std::string serverDataFile = "server_file.txt";
 
 	Server server;
-	server.AddUsersFromFile(serverDataFile);
+	//server.AddUsersFromFile(serverDataFile);
+	server.AddUsersFromMySQL(); // get data from mysql server 
 	server.ShowOSInfo(); // show info about OS
 	server.Help();		 // show how to use our server
 	
@@ -131,9 +132,6 @@ int main()
 			std::cout << "We should answer!" << std::endl;
 			server.SendCommand();
 		}
-		
-
-   }
-   
+   } 
 }
 

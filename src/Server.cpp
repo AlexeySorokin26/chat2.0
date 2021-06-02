@@ -303,3 +303,72 @@ int Server::GetIdByLogin(const std::string& login) {
 			return u.Id();
 	return -1;
 }
+
+void Server::AddUsersFromMySQL() {
+	
+	GetDescriptor(mysql);
+
+	GetConnection(mysql);
+
+	readAllFromBD(mysql);
+
+}
+
+void Server::AddUsersToMySQL(){
+	
+}
+
+
+void Server::GetDescriptor(MYSQL &mysql) {
+	mysql_init(&mysql);
+         if (&mysql == NULL) {
+            // if we did not get descriptor 
+            std::cout << "Error: can't create MySQL-descriptor" << std::endl;
+        }
+}
+
+void Server::GetConnection(MYSQL &mysql) {
+	// Подключаемся к серверу
+    if (!mysql_real_connect(&mysql, "localhost", "maestro", "spartak", "myServer", NULL, NULL, 0)) {
+        // Если нет возможности установить соединение с БД выводим сообщение об ошибке
+        std::cout << "Error: can't connect to database " << mysql_error(&mysql) << std::endl;
+	}
+    else {
+        // Если соединение успешно установлено выводим фразу — "Success!"
+        std::cout << "Success!" << std::endl;
+    }
+}
+
+void Server::readAllFromBD(MYSQL &mysql) {
+	
+	User tmpUser;
+
+	MYSQL_RES* res;
+	MYSQL_ROW row;
+
+    mysql_query(&mysql, "select * from users");
+
+    if (res = mysql_store_result(&mysql)) {
+	    while (row = mysql_fetch_row(res)) {
+		    for (int i = 0; i < mysql_num_fields(res); i++) {
+			    std::cout << row[i] << "  ";
+				if(i == 0)
+					tmpUser.SetLogin(row[i]);
+				if(i == 1)
+					tmpUser.SetPassword(row[i]);
+		    }
+			_users.push_back(tmpUser);
+		    std::cout << std::endl;
+	    }
+	}
+	else
+	    std::cout << "Ошибка MySql номер " << mysql_error(&mysql);
+
+	for(auto u : _users)
+		std::cout << u.GetLogin() << " " << u.GetPassword() << std::endl;
+	
+}
+
+std::vector<User> Server::GetUsers() {
+	return _users;
+}

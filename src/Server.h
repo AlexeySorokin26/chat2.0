@@ -1,4 +1,5 @@
 #pragma once
+#include "mysql/mysql.h"
 #include "User.h"
 #include <iostream>
 #include <boost/tokenizer.hpp>
@@ -30,6 +31,11 @@ public:
 	void ShowAllUsers();
 	void AddUser(const User& newUser);												// registration
 	void AddUsersFromFile(const std::string& serverDataFile);
+
+	void AddUsersFromMySQL();
+	void AddUsersToMySQL();
+	std::vector<User> GetUsers();
+
 	void AddUsersToFile(const std::string& serverDataFile);
 	void RemoveUserByID(const size_t id);
 	unsigned int GetAmountOfUser();
@@ -43,9 +49,16 @@ public:
 	void Logout(const size_t id);
 	int GetIdByLogin(const std::string& login);
 private:
+
+	MYSQL mysql;
+
 	std::vector<User> _users;														// id-User ?maybe better to use a list or deque; 
 	unsigned int _amountOfUsers;
 	int _connection;
 	int _socket_file_descriptor;
+
+	void GetDescriptor(MYSQL &mysql);
+	void GetConnection(MYSQL &mysql);
+	void readAllFromBD(MYSQL &mysql);
 };
 

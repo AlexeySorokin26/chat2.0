@@ -20,6 +20,7 @@ set(CLIENT_SRC Client.cpp Client.h)
 set(MESSAGE_SRC Message.cpp Message.h)
 set(SERVER_SRC Server.cpp Server.h)
 set(UTILIY_SRC Utility.cpp Utility.h)
+set(LIBS ${LIBS} mysqlclient)
 
 #file(GLOB headers *.h)
 
@@ -35,8 +36,8 @@ if(Boost_FOUND)
 	message(STATUS "found boost")	
 	include_directories(${Boost_INCLUDE_DIRS})
 	add_executable(Chat chat.cpp)
-	target_link_libraries(Chat UserLib MessageLib ServerLib UtilityLib ${Boost_LIBRARIES})
+	target_link_libraries(Chat UserLib MessageLib ServerLib UtilityLib ${LIBS} ${Boost_LIBRARIES})
 	add_executable(ChatClient chatClient.cpp)
-	target_link_libraries(ChatClient UserLib ClientLib MessageLib UtilityLib ${Boost_LIBRARIES})
+	target_link_libraries(ChatClient UserLib ClientLib MessageLib UtilityLib ${LIBS} ${Boost_LIBRARIES})
 endif()
 
