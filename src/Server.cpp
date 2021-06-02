@@ -312,10 +312,27 @@ void Server::AddUsersFromMySQL() {
 
 	readAllFromBD(mysql);
 
+	mysql_close(&mysql);
+
 }
 
 void Server::AddUsersToMySQL(){
-	
+
+	GetDescriptor(mysql);
+
+	GetConnection(mysql);
+
+	std::string log;
+	std::string pass;
+	for(auto u : _users){
+		log = u.GetLogin();
+		pass = u.GetPassword();
+		std::string query = "insert users (login, pass) values (" + log + ", " + pass + ")";
+		std::cout << query << std::endl;
+		mysql_query( &mysql, query.c_str() );
+	}
+
+	mysql_close(&mysql);
 }
 
 

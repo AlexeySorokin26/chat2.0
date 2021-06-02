@@ -30,6 +30,7 @@ int main()
 			std::cout << "Client Exited." << std::endl;
 			std::cout << "Server is Exiting..!" << std::endl;
 			server.AddUsersToFile(serverDataFile);
+			server.AddUsersToMySQL();
 			break;
 		}	
 		else if (command == "help") {
