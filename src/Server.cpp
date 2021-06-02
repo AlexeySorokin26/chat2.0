@@ -327,7 +327,7 @@ void Server::AddUsersToMySQL(){
 	for(auto u : _users){
 		log = u.GetLogin();
 		pass = u.GetPassword();
-		std::string query = "insert users (login, pass) values (" + log + ", " + pass + ")";
+		std::string query = "insert users (login, pass) values (\" " + log + "\", \" " + pass + "\" )";
 		std::cout << query << std::endl;
 		mysql_query( &mysql, query.c_str() );
 	}
